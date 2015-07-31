@@ -68,8 +68,8 @@ $(document).ready ->
               'main_class',
               'sub_class',
               'n_identifications',
-              'oxichain',
-              'included_by_oxichain']
+              'included_by_oxichain',
+              'oxichain']
     csv += header.join(',')+($('#sample_names').html())+"\n"
     for row in results
       d = row.data
@@ -88,29 +88,30 @@ $(document).ready ->
         r.push d.lipid.category_
         r.push d.lipid.main_class
         r.push d.lipid.sub_class
+        r.push d.n_ids
         if d.is_oxifeature
           r.push 'true'
         else
           r.push 'false'
       else
-        r.push 'through oxichain'
-        r.push ''
-        r.push ''
-        r.push ''
-        r.push ''
-        r.push ''
-        r.push ''
-        r.push 'oxichain'
-        r.push ''
-        r.push ''
-        r.push 0
-        r.push d.feature.oxichain
-        r.push 'true'
+        r.push 'through oxichain' #common_name
+        r.push '' #lm_id
+        r.push '' #noxidations
+        r.push '' #id_score
+        r.push '' # id_fragscore
+        r.push '' #mass_error
+        r.push ''  #iss
+        r.push 'oxichain' #category
+        r.push '' #main
+        r.push '' #subclass
+        r.push 0 #n_ids
+        r.push true  #oxifeature
+      r.push d.feature.oxichain
       for i in [0..d.values.length/2-1]
         r.push d.values[i*2]
       for i in [0..d.values.length/2-1]
         r.push d.values[i*2+1]
-      csv += r.join(',')+"\n"
+      csv += "\""+r.join('","')+"\"\n"
     window.open(encodeURI('data:application/csv;charset=utf-8;filename=results.csv,'+csv))
 
 

@@ -1,0 +1,36 @@
+<h1>Results of oxidated lipids filtering</h1>
+<hr />
+<%=render file: 'filter/show_filtering_criteria'%>
+<div id="info"></div>
+<hr />
+<table class="table table-condensed table-striped">
+  <thead>
+  <tr>
+    <th colspan="3"></th>
+    <th colspan="<%=@samples.count%>" class="bg-warning values_raw">Raw Values</th>
+    <th colspan="<%=@samples.count%>" class="bg-info values_norm">Normalized Values</th>
+  </tr>
+  <tr>
+    <th>Feature</th>
+    <th>Base lipid</th>
+    <th id="sorting_criterium">Oxidations</th>
+    <% @samples.each do |id, name| %>
+        <th class="bg-warning values_raw"><%=name%></th>
+    <% end %>
+    <% @samples.each do |id, name| %>
+        <th class="bg-info values_norm"><%=name%></th>
+    <% end %>
+  </tr>
+  </thead>
+
+  <tbody id="results">
+  </tbody>
+</table>
+<div class="panel panel-warning" id="waiting">
+  <div class="panel-body">
+    <div class="container">
+      <div class="span7 offset5 centered"><%= image_tag('ajax-loader.gif') %><br />waiting for filtering results...</div>
+    </div>
+  </div>
+</div>
+<div class="hidden" id="sample_names"><% @samples.each do |id, name| %>,<%=name%>_raw<% end %><% @samples.each do |id, name| %>,<%=name%>_norm<% end %></div>

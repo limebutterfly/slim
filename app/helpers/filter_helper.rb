@@ -3,13 +3,13 @@ module FilterHelper
     attr_accessor :minimal, :relative, :oxichain
     def initialize(session)
       @minimal = {
-        'score' => 20,
+        'score' => 33,
         'fragmentation_score' => 1,
-        'isotope_similarity' => 90,
+        'isotope_similarity' => 65,
         'mass_error' => 0.6,
         'adducts' => 1
       }
-      @relative = ['fragmentation_score','score','isotope_similarity','mass_error','adducts']
+      @relative = ['score','mass_error','isotope_similarity','fragmentation_score','adducts']
       @oxichain = nil
       @minimal = session[:filtering_minimal] if not session[:filtering_minimal].nil?
       @relative = session[:filtering_relative] if not session[:filtering_relative].nil?

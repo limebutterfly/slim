@@ -102,6 +102,7 @@ class FeaturesController < ApplicationController
         end
         log(" ... found oxichain #{found_oxichains}: members are: #{member_string.join ', '}.")
         found_oxichains += 1
+        features_in_oxichain << oxichain_members.length
       end
       if processed_features%200==0
         log("(#{"%.0f"%(100.0*processed_features/total_features)}%)    ....   done with #{processed_features} of #{total_features} features  ....")
