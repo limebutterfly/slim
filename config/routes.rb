@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   get 'samples/group'
-
-  get 'samples/group_save'
+  post 'samples/group_save'
 
   get 'import/experiment'
   get 'import/importlog'

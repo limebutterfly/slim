@@ -133,7 +133,7 @@ $(document).ready ->
         results.push row
         $("#results").append(row)
       $("#info").html '<br /><p>Filtered '+(data.length)+' lipids.</p>'
-      $("#info").append $('<button />', text: 'show normalized values', id: 'toggle_norm').click((e) ->
+      $("#info").append $('<button />', class:'btn btn-default filter-button', text: 'show normalized values', id: 'toggle_norm').click((e) ->
         if norm
           # switch to raw values
           norm = false
@@ -149,7 +149,7 @@ $(document).ready ->
         for row in results
           row.draw_row()
       )
-      $("#info").append $('<button />', text: 'sort by category').click((e) ->
+      $("#info").append $('<button />', class:'btn btn-default filter-button', text: 'sort by category').click((e) ->
         cat = {}
         $('#sorting_criterium').html('Category')
         sorting_criterium = 'cat'
@@ -167,7 +167,7 @@ $(document).ready ->
             $("#results").append(row)
             row.draw_row()
       )
-      $("#info").append $('<button />', text: 'sort by oxidations').click((e) ->
+      $("#info").append $('<button />', class:'btn btn-default filter-button', text: 'sort by oxidations').click((e) ->
         cat = {}
         for i in [0..10]
           cat[i] = []
@@ -181,7 +181,7 @@ $(document).ready ->
             $("#results").append(row)
             row.draw_row()
       )
-      $("#info").append $('<button />', text: 'sort by retention time').click((e) ->
+      $("#info").append $('<button />', class:'btn btn-default filter-button', text: 'sort by retention time').click((e) ->
         $('#sorting_criterium').html('rt (min)')
         sorting_criterium = 'rt'
         results = results.sort (a,b) ->
@@ -194,7 +194,7 @@ $(document).ready ->
           row.draw_row()
           $("#results").append(row)
       )
-      $("#info").append $('<button />', text: 'sort by m/z').click((e) ->
+      $("#info").append $('<button />', class:'btn btn-default filter-button', text: 'sort by m/z').click((e) ->
         $('#sorting_criterium').html('m/z')
         sorting_criterium = 'm/z'
         results = results.sort (a,b) ->
@@ -207,7 +207,7 @@ $(document).ready ->
           row.draw_row()
           $("#results").append(row)
       )
-      $("#info").append $('<button />', text: 'sort by oxichain').click((e) ->
+      $("#info").append $('<button />', class:'btn btn-default filter-button', text: 'sort by oxichain').click((e) ->
         $('#sorting_criterium').html('oxichain #')
         sorting_criterium = 'oxichain'
         results = results.sort (a,b) ->
@@ -225,7 +225,7 @@ $(document).ready ->
           row.draw_row()
           $("#results").append(row)
       )
-      $("#info").append $('<button />', text: 'download as csv').click((e) ->
+      $("#info").append $('<button />', class:'btn btn-default filter-button', text: 'download as csv').click((e) ->
         export_csv()
       )
     $('.values_norm').hide()

@@ -11,21 +11,7 @@
 </head>
 <body style="margin-top:50px">
 <div class="container">
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <ul class="nav navbar-nav">
-        <a class="navbar-brand" rel="home" href="/" title="SLIM Home">
-          <%= image_tag 'slim_title_logo.png', size: '62x42', style: 'margin-top:-11px' %>
-        </a>
-        <li><%= link_to 'Lipid database', '/lipids'%></li>
-        <li><%= link_to 'Features', '/features'%></li>
-        <li><%= link_to 'Plot', '/features/plot_2d'%></li>
-
-        <li><%= link_to 'Filter settings', '/filter/edit'%></li>
-        <li><%= link_to 'Filter output', '/filter/list'%></li>
-      </ul>
-    </div>
-  </nav>
+  <%= render :template=>'layouts/navigation'%>
 
 <%= yield %>
 </div>

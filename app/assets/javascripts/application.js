@@ -13,6 +13,7 @@
 //= require chartkick
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require bootstrap-sprockets
 //= require nprogress
 //= require nprogress-turbolinks

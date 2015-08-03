@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150729114124) do
+ActiveRecord::Schema.define(version: 20150731074846) do
 
   create_table "features", force: true do |t|
     t.decimal  "rt",         precision: 12, scale: 9
@@ -25,6 +25,12 @@ ActiveRecord::Schema.define(version: 20150729114124) do
   end
 
   add_index "features", ["id_string"], name: "index_features_on_id_string", using: :btree
+
+  create_table "groups", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "identifications", force: true do |t|
     t.integer  "feature_id"
@@ -85,6 +91,9 @@ ActiveRecord::Schema.define(version: 20150729114124) do
     t.string   "short"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "group_id"
   end
+
+  add_index "samples", ["group_id"], name: "index_samples_on_group_id", using: :btree
 
 end

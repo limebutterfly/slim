@@ -1,2 +1,15 @@
-<h1>Samples#group</h1>
-<p>Find me in app/views/samples/group.html.erb</p>
+<h1 class="page-title">Assign samples to groups</h1>
+<div id="actions-container"></div>
+<div id="groups-container">
+<ul class="list-group group" id="group_0">
+  <li class="list-group-item active group-title">Not yet in a group</li>
+<% current_group = nil
+   @samples.each do |sample|
+    if current_group != sample.group
+     current_group = sample.group
+
+     %></ul><ul class="list-group group" id="group_<%=current_group.id%>"><li class="list-group-item active group-title"><%=sample.group.nil? ? 'No group' :  sample.group.name %></li>
+    <% end %>
+  <li class="list-group-item" id="sample_<%=sample.id%>"><%=sample.short%> (<%=sample.id_string %>)</li>
+<% end %>
+   </ul></div>

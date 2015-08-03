@@ -11,7 +11,7 @@
  *= require_self
  *= require nprogress
  *= require nprogress-bootstrap
-
+ *= require jquery-ui
  *= require_tree .
  */
 @import "bootstrap-sprockets";

@@ -1,3 +1,8 @@
 // Place all the styles related to the samples controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.group {width: 220px; float: left;font-size: 0.8em;margin: 5px}
+.group-title {font-weight: 600;font-size: 1.1em}
+#groups-container {background-color:#aaffaa}
+#actions-container button {margin: 5px}
