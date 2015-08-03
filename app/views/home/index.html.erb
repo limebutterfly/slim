@@ -1,19 +1,17 @@
 <!-- <h3>SLIM <span style="color:gray;font-size:medium">Smart Limidomics Interactive Manager</span></h3> -->
-
-<%= image_tag('slim_logo.png', size: '273x166') %>
-<h3>Usage</h3>
-<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Import Lipid-Database</h3></div><div class="panel-body">
-  <pre>bundle exec rake import:sdf file=[PATH_TO_SDF_FILE]
-  </pre>
+<div class="row">
+<div class="col-sm-12 col-md-6 col-lg-4"><%= image_tag('slim_logo.png', size: '273x166') %></div>
+  <div class="col-sm-12 col-md-6 col-lg-8"><h1 class="page-header">SLIM <small>Version <%=@version%></small></h1>
+  <p>Welcome <b><%=@username%></b>.<br />The database contains <b><%=@lipids_count%> lipids</b> and your current experiment has <b><%=@features_count%> features</b>, including  <b><%=@oxichain_count%> oxichains</b>. You have defined <b><%=@groups_count%> groups</b> for <b><%=@samples_count%> samples.</b>  </p></div>
 </div>
-</div>
-<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Import Experiment</h3></div><div class="panel-body">
-  <pre>bundle exec rake import:experiment id=[PATH_TO_ID_FILE] quant=[PATH_TO_QUANT_FILE]
-  </pre>
-</div></div>
-<div class="panel panel-default">
-  <div class="panel-heading"><h3 class="panel-title">Processing</h3></div><div class="panel-body">
-<ul>
-      <li><%= link_to 'Find oxichains', '/features/oxichain' %></li>  </ul>
-    </div>
-</div>
+<h4>Importing</h4>
+<p>Import a new lipid database by using the shell command <span class="script">bundle exec rake import:sdf file=<span class="script-replace">path to sdf file</span></span></p>
+<p>Import a new experiment by using the shell command <span class="script">bundle exec rake import:experiment id=<span class="script-replace">path to id file</span> quant=<span class="script-replace">path to quant file</span></span></p>
+<h4>Suggested Workflow</h4>
+<ol>
+  <li>Import a new lipid database, if necessary</li>
+  <li>Import a new experiment</li>
+  <li><%= link_to  'Find oxichains', features_oxichain_path %></li>
+  <li><%= link_to 'Define filtering settings', filter_edit_path %></li>
+  <li><%= link_to 'Get filtering output',filter_list_path %> </li>
+</ol>

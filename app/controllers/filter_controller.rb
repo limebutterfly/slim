@@ -17,27 +17,113 @@ class FilterController < ApplicationController
 
   def list_oxi
     @criteria = FilteringCriteria.new session
-    @samples = Sample.to_hash
+    #@samples = Sample.to_hash
   end
 
   def get_list_oxi
-    @criteria = FilteringCriteria.new session
-    @results = filteredIdentifications(@criteria)
-    #@results = [Identification.find(383093),Identification.find(384995),Identification.find(382925)]
-    @criteria.save(session)
-    @oxichains = {}
-    features = {}
-    @results.each do |id|
-       @oxichains[id.feature.oxichain] = id.lipid.parent
-       features[id.feature.id] = true
+    crit = FilteringCriteria.new session
+    # get all oxichains
+    oxichain_ids = {}
+    oxichains = Feature.all.group(:oxichain).pluck(:oxichain)
+    oxichains.each do |oxichain|
+      next if oxichain.nil? #no oxichain => continue
+      # get all parental lipids for an oxichain
+      features = []
+      ActiveRecord::Base.connection.execute("SELECT id FROM features WHERE oxichain=#{oxichain.to_i}").each do |feature|
+        features << feature[0]
+      end
+      features = features.join(",")
+      identifications = ActiveRecord::Base.connection.execute("SELECT parent FROM lipids,identifications WHERE feature_id IN (#{features}) AND lipids.id=lipid_id")
+      parents = {}
+      # get parents with most hits
+      identifications.each do |parent|
+        parents[parent[0]] ||= 0
+        parents[parent[0]] += 1
+      end
+      best_parents = []
+      n = 0
+      parents.each do |parent, n_ids|
+        if n_ids > n
+          best_parents = [parent]
+          n = n_ids
+        elsif n_ids == n
+          best_parents.push parent
+        end
+      end
+      #ignore an oxichain with less than two parental identifications
+      next if n<2
+      # find best parent
+      identifications = []
+      Identification.find_by_sql("SELECT * from identifications WHERE feature_id IN (#{features}) AND lipid_id IN (SELECT id FROM lipids WHERE parent IN ('#{best_parents.join("','")}'))").each do |id|
+        identifications << id
+        crit.relative.reverse_each do |criterium|
+          case criterium
+            when 'score'
+              identifications.sort! {|a,b| if a.score > b.score
+                                             1  #b follows a
+                                           elsif b.score > a.score
+                                             -1 #a follows b
+                                           else
+                                             0 # a and b are equivalent
+                                           end
+              }
+            when 'fragmentation_score'
+              identifications.sort! {|a,b| if a.fragmentation_score > b.fragmentation_score
+                                             1  #b follows a
+                                           elsif b.fragmentation_score > a.fragmentation_score
+                                             -1 #a follows b
+                                           else
+                                             0 # a and b are equivalent
+                                           end
+              }
+            when 'isotope_similarity'
+              identifications.sort! {|a,b| if a.isotope_similarity > b.isotope_similarity
+                                             1  #b follows a
+                                           elsif b.isotope_similarity > a.isotope_similarity
+                                             -1 #a follows b
+                                           else
+                                             0 # a and b are equivalent
+                                           end
+              }
+            when 'mass_error'
+              identifications.sort! {|a,b| if a.mass_error > b.mass_error
+                                             1  #b follows a
+                                           elsif b.mass_error > a.mass_error
+                                             -1 #a follows b
+                                           else
+                                             0 # a and b are equivalent
+                                           end
+              }
+            when 'adducts'
+              identifications.sort! {|a,b| if a.adducts > b.adducts
+                                             1  #b follows a
+                                           elsif b.adducts > a.adducts
+                                             -1 #a follows b
+                                           else
+                                             0 # a and b are equivalent
+                                           end
+              }
+            else
+              raise StandardError, 'Tried to sort by parameter %s, but this parameter does not exist.'%criterium
+          end
+        end
+      end
+      best_id = identifications[0]
+      oxichain_ids[oxichain] = best_id
     end
-    unless @criteria.oxichain==false
-      @oxifeatures = Feature.includes(:identifications, :quantifications).where(oxichain: @oxichains.keys).where.not(id: features.keys).where ('oxichain IS NOT NULL')
-    else
-      @oxifeatures = []
+    oxichains = {}
+    oxichains['samples'] = Sample.order(:group_id).find_all
+    oxichains['groups'] = Group.all.find_all
+    oxichain_ids.each do |oxichain, id|
+      oxichains[oxichain] = {id: id}
+      oxichains[oxichain]['lipid'] = Lipid.find(id.lipid_id)
+      oxichains[oxichain]
+      Feature.where(oxichain: oxichain).order(m_z: :asc).includes(:quantifications).find_each do |feature|
+        oxichains[oxichain][feature.id_string] = feature.quants
+      end
     end
 
-    render layout:false
+    render :json => oxichains
   end
 
   def list

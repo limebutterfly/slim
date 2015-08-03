@@ -235,3 +235,78 @@ $(document).ready ->
       $.ajax url: 'statistics', type: 'GET', success: (data) ->
         $("#statistics").html(data)
     )
+
+warning = (message) ->
+  r = $('<div />', class:'panel panel-warning', id='waiting')
+  r.append $('<div />', class:'panel-heading', html: '<h3 class="panel-title">'+message+'</h3>')
+  r.append $('<div />', class:'panel-body').append $('<img />', src: '/assets/ajax-loader.gif')
+  return r
+
+$(document).ready ->
+  parent = $('#list-oxi')
+  parent.html warning('loading data')
+  return if !parent.length
+  $.ajax 'get_list_oxi', success: (data) ->
+    parent.html warning('processing data')
+    table = $('<table />',class:'table')
+    th = $('<thead />')
+    table.append th
+    row1 = $('<tr />')
+    th.append row1
+    row2 = $('<tr />')
+    th.append row2
+    tbody = $('<tbody />')
+    table.append tbody
+    row2.append $('<th />',html: 'Lipid')
+    row2.append $('<th />', html: '#ox')
+    row1.append $('<th />',colspan:2)
+    n_group = 0
+    groups = {}
+    samples = []
+    $.each data.groups, (key,group) ->
+      groups[group.id] = group.name
+    console.log(groups)
+    last_group = null
+    $.each data.samples, (key,sample) ->
+      row2.append $('<th />',html: sample.short)
+      samples.push sample.id
+      if last_group == null
+        last_group = sample.group_id
+        n_group = 1
+        return
+      if sample.group_id != last_group
+         row1.append $('<th />',colspan:n_group, html:groups[last_group])
+         n_group = 0
+         last_group = sample.group_id
+      n_group += 1
+    row1.append $('<th />',colspan:n_group, html:groups[last_group])
+
+    $.each data, (key, oxichain) ->
+      return if key=="samples"
+      return if key=="groups"
+      first_feature = null
+      ox = 0
+      $.each oxichain, (key, feature) ->
+        return if key=="id"
+        return if key=="lipid"
+        if first_feature == null
+          first_feature = feature
+          return
+        ox += 1
+        row = $('<tr />')
+        tbody.append row
+        values = []
+        $.each samples, (key, sample) ->
+          values.push Math.round(Math.log2(feature[sample][0]/first_feature[sample][0])*1000)/1000;
+        ma = Math.max.apply(Math,values);
+        mi = Math.min.apply(Math,values);
+        return if !isFinite(mi) || !isFinite(ma)
+        $('<td />',html:'<a href="/lipids/'+oxichain.lipid.id+'">'+oxichain.lipid.common_name+'</a>',style:'overflow:hidden').appendTo row
+        $('<td />',html:ox).appendTo row
+        $.each values, (key, value) ->
+          $('<td />',html:value,style:'background-color:'+heatmap(value,mi,ma)).appendTo row
+    parent.html table
+
+
+
+
