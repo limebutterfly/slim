@@ -1,8 +1,8 @@
 <h1 class="page-header">Listing lipids</h1>
 Total: <%= @lipids_count %> lipids (from <%= @start %> to <%= @end %>)
 <br />
+<%= render template: 'lipids/search_field' %>
 <%= paginate @lipids %>
-
 <table class="table table-striped">
   <thead>
     <tr>

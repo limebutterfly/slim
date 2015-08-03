@@ -1,0 +1,7 @@
+<%= form_tag search_lipids_path, :method => 'post' do %>
+    <div class="row"><div class="col-md-6"><div class="input-group col-md-12">
+    <%= text_field_tag :search, params[:search], class: 'form-control' %>
+      <span class="input-group-btn">
+    <%= content_tag  :submit, nil, class:'btn btn-default' do raw '<span class="glyphicon glyphicon-search"></span>' end %></span>
+    </div></div></div>
+<% end %>

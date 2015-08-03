@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   resources :lipids do
     collection do
-      post 'search/:search', as: :search, action: :search
+      post 'search', as: :search, action: :search
     end
   end
 

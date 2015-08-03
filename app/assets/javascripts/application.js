@@ -17,4 +17,5 @@
 //= require bootstrap-sprockets
 //= require nprogress
 //= require nprogress-turbolinks
+//= require d3
 //= require_tree .
