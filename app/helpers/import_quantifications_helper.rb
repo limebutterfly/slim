@@ -3,7 +3,7 @@ module ImportQuantificationsHelper
     #compound_all = Compound.select("compound").all.uniq
     n = 0
     first_row = true
-    before_samples = 'Minimum CV%'
+    before_samples = 'Anova (p)'
     starting_sample = nil
     n_samples = 0
     samples = nil
