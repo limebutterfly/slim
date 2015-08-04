@@ -118,7 +118,7 @@ class FilterController < ApplicationController
       oxichains[oxichain] = {id: id}
       oxichains[oxichain]['lipid'] = Lipid.find(id.lipid_id)
       oxichains[oxichain]
-      Feature.where(oxichain: oxichain).order(m_z: :asc).includes(:quantifications).find_each do |feature|
+      Feature.where(oxichain: oxichain).order(m_z: :asc).includes(:quantifications).each do |feature|
         oxichains[oxichain][feature.id_string] = feature.quants
       end
     end

@@ -305,7 +305,42 @@ $(document).ready ->
         $('<td />',html:ox).appendTo row
         $.each values, (key, value) ->
           $('<td />',html:value,style:'background-color:'+heatmap(value,mi,ma)).appendTo row
-    parent.html table
+    parent.html $('<button>',class:'btn btn-default',html:'Export as csv',click: (event) ->
+      titlerow = ['lipid','class1','class2','class3','score','frag_score','mass_error','iss','adducts','oxidations']
+      $.each data.samples, (key,sample) ->
+        titlerow.push sample.short+' ('+groups[sample.group_id]+') [raw]'
+      $.each data.samples, (key,sample) ->
+        titlerow.push sample.short+' ('+groups[sample.group_id]+') [norm]'
+      csv = '"'+titlerow.join('","')+'"\n'
+      $.each data, (key, oxichain) ->
+        return if key=="samples"
+        return if key=="groups"
+        first_feature = null
+        ox = 0
+        $.each oxichain, (key, feature) ->
+          return if key=="id"
+          return if key=="lipid"
+          if first_feature == null
+            first_feature = feature
+            return
+          ox += 1
+          row = [oxichain.lipid.common_name, oxichain.lipid.category_, oxichain.lipid.main_class, oxichain.lipid.sub_class,oxichain.id.score, oxichain.id.fragmentation_score, oxichain.id.mass_error, oxichain.id.isotope_similarity, oxichain.id.adducts,ox]
+          row = $.map row, (item) ->
+            return '"'+item+'"'
+          $.each samples, (key, sample) ->
+            v = Math.log2(feature[sample][0]/first_feature[sample][0])
+            if !isFinite(v)
+              v = 'NA'
+            row.push v
+          $.each samples, (key, sample) ->
+            v = Math.log2(feature[sample][1]/first_feature[sample][1])
+            if !isFinite(v)
+              v = 'NA'
+            row.push v
+          csv += row.join(",")+"\n"
+      window.open(encodeURI('data:application/csv;charset=utf-8;filename=results.csv,'+csv))
+    )
+    parent.append table
 
 
 
