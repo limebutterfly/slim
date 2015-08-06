@@ -53,10 +53,11 @@ namespace :import do
     file = ENV['quant']
     file ||= 'sample_data/COMPOUND_quantities_short.csv'
     puts "#{"%.2f" % (Time.now - t0)}s    importing quantification file #{file}"
-    puts '    ... deleting old quantifications, samples and features, this may take a while'
+    puts '    ... deleting old data ...'
     Quantification.delete_all
     Sample.delete_all
     Feature.delete_all
+    Group.delete_all
     puts "#{"%.2f" % (Time.now - t0)}s    deleted old quantification data"
     puts importQuantifications(file)
     puts "#{"%.2f" % (Time.now - t0)}s    --- COMPLETED quantification import, now starting identifications import"
