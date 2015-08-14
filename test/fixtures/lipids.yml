@@ -1,39 +1,39 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  lm_id: MyString
-  pubchem_substane_url: MyString
-  lipid_maps_cmpd_url: MyString
-  common_name: MyString
-  systematic_name: MyString
-  synonyms: MyString
-  category: MyString
-  main_class: MyString
-  sub_class: MyString
-  exact_mass: 1.5
-  formula: MyString
-  pubchem_sid: MyString
-  pubchem_cid: MyString
-  kegg_id: MyString
-  chebi_id: MyString
-  inchi_key: MyString
-  status: MyString
-
-two:
-  lm_id: MyString
-  pubchem_substane_url: MyString
-  lipid_maps_cmpd_url: MyString
-  common_name: MyString
-  systematic_name: MyString
-  synonyms: MyString
-  category: MyString
-  main_class: MyString
-  sub_class: MyString
-  exact_mass: 1.5
-  formula: MyString
-  pubchem_sid: MyString
-  pubchem_cid: MyString
-  kegg_id: MyString
-  chebi_id: MyString
-  inchi_key: MyString
-  status: MyString
+#
+#one:
+#  lm_id: MyString
+#  pubchem_substane_url: MyString
+#  lipid_maps_cmpd_url: MyString
+#  common_name: MyString
+#  systematic_name: MyString
+#  synonyms: MyString
+#  category: MyString
+#  main_class: MyString
+#  sub_class: MyString
+#  exact_mass: 1.5
+#  formula: MyString
+#  pubchem_sid: MyString
+#  pubchem_cid: MyString
+#  kegg_id: MyString
+#  chebi_id: MyString
+#  inchi_key: MyString
+#  status: MyString
+#
+#two:
+#  lm_id: MyString
+#  pubchem_substane_url: MyString
+#  lipid_maps_cmpd_url: MyString
+#  common_name: MyString
+#  systematic_name: MyString
+#  synonyms: MyString
+#  category: MyString
+#  main_class: MyString
+#  sub_class: MyString
+#  exact_mass: 1.5
+#  formula: MyString
+#  pubchem_sid: MyString
+#  pubchem_cid: MyString
+#  kegg_id: MyString
+#  chebi_id: MyString
+#  inchi_key: MyString
+#  status: MyString

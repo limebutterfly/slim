@@ -1,0 +1,2 @@
+class SpectrumController < ApplicationController
+end

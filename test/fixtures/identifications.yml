@@ -1,19 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  feature: 
-  lipid: 
-  fragmentation_score: 1.5
-  score: 1.5
-  isotope_similarity: 1.5
-  adducts: 1
-  priority: 1
-
-two:
-  feature: 
-  lipid: 
-  fragmentation_score: 1.5
-  score: 1.5
-  isotope_similarity: 1.5
-  adducts: 1
-  priority: 1
+#
+#one:
+#  feature:
+#  lipid:
+#  fragmentation_score: 1.5
+#  score: 1.5
+#  isotope_similarity: 1.5
+#  adducts: 1
+#  priority: 1
+#
+#two:
+#  feature:
+#  lipid:
+#  fragmentation_score: 1.5
+#  score: 1.5
+#  isotope_similarity: 1.5
+#  adducts: 1
+#  priority: 1

@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  feature: 
-  sample: 
-  norm: 1.5
-  raw: 1.5
-
-two:
-  feature: 
-  sample: 
-  norm: 1.5
-  raw: 1.5
+#one:
+#  feature:
+#  sample:
+#  norm: 1.5
+#  raw: 1.5
+#
+#two:
+#  feature:
+#  sample:
+#  norm: 1.5
+#  raw: 1.5
